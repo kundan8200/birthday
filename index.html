@@ -1611,6 +1611,33 @@
                 
                 const img = document.createElement('img');
                 img.src = file;
+                img.alt = `Birthday photo ${i + 1}`;
+                img.loading = 'lazy';
+                
+                // Add error handling and fallback
+                img.onerror = function() {
+                    console.log(`Image ${file} failed to load`);
+                    this.style.display = 'none';
+                    const fallback = document.createElement('div');
+                    fallback.style.width = '100%';
+                    fallback.style.height = '100%';
+                    fallback.style.display = 'flex';
+                    fallback.style.alignItems = 'center';
+                    fallback.style.justifyContent = 'center';
+                    fallback.style.backgroundColor = '#ffeef8';
+                    fallback.style.borderRadius = '8px';
+                    fallback.style.fontSize = '36px';
+                    fallback.textContent = '❤️';
+                    photoFrame.appendChild(fallback);
+                };
+                
+                // Add load event for smooth fade-in
+                img.style.opacity = '0';
+                img.style.transition = 'opacity 0.5s ease-in-out';
+                img.onload = function() {
+                    img.style.opacity = '1';
+                };
+                
                 photoFrame.appendChild(img);
                 photoThread.appendChild(photoFrame);
                 
