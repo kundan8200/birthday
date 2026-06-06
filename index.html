@@ -1636,6 +1636,14 @@
                 photoFrame.style.height = pos.frameSize + 'px';
                 photoFrame.style.transform = `rotate(${initialRotation}deg)`;
                 photoFrame.style.zIndex = pos.zIndex;
+                photoFrame.style.cursor = 'pointer'; // Make click obvious
+                
+                // Add click event to open popup
+                photoFrame.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    document.getElementById('popupImg').src = file;
+                    document.getElementById('popup').style.display = 'flex';
+                });
                 
                 // 1. ADD IMAGE FIRST!
                 const img = document.createElement('img');
