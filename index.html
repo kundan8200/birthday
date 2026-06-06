@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="description" content="A beautiful, animated birthday surprise website made with love!">
     <meta name="theme-color" content="#ff69b4">
     <title>Happy Birthday! Mittu ❤️</title>
@@ -15,9 +15,14 @@
             box-sizing: border-box;
         }
 
-        body {
+        html, body {
             font-family: 'Georgia', serif;
             overflow: hidden;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
             background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
         }
 
@@ -851,36 +856,45 @@
         /* Mobile Optimizations */
         @media (max-width: 768px) {
             .hanging-gallery-container {
-                padding: 15px 5px;
+                padding: 10px 5px;
             }
             
             .intro-text,
             .typewriter-text,
             .final-text {
-                font-size: 0.9em !important;
+                font-size: 0.8em !important;
                 padding: 0 15px;
             }
             
             .next-btn {
-                padding: 12px 30px !important;
-                font-size: 0.95rem !important;
+                padding: 10px 25px !important;
+                font-size: 0.85rem !important;
             }
             
             .message-card,
             .final-letter {
-                padding: 25px !important;
-                margin: 0 15px;
-                max-width: 90% !important;
+                padding: 20px !important;
+                margin: 0 10px;
+                max-width: 95% !important;
+            }
+            
+            .photo-frame {
+                transform: scale(0.85);
             }
         }
         
         @media (max-width: 480px) {
             .intro-text {
-                font-size: 0.8em !important;
+                font-size: 0.75em !important;
             }
             
             .photo-frame {
-                transform: scale(0.9);
+                transform: scale(0.75);
+            }
+            
+            .final-text {
+                font-size: 0.75em !important;
+                line-height: 1.8 !important;
             }
         }
         
