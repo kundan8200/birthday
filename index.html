@@ -342,6 +342,9 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block !important; /* Force display */
+            background: #fff; /* White background */
+            border-radius: 4px;
         }
         
         /* Premium polaroid frame styles */
@@ -856,7 +859,7 @@
         /* Mobile Optimizations */
         @media (max-width: 768px) {
             .hanging-gallery-container {
-                padding: 10px 5px;
+                padding: 5px 2px;
             }
             
             .intro-text,
@@ -879,7 +882,7 @@
             }
             
             .photo-frame {
-                transform: scale(0.85);
+                transform: scale(0.8);
             }
         }
         
@@ -889,7 +892,7 @@
             }
             
             .photo-frame {
-                transform: scale(0.75);
+                transform: scale(0.65);
             }
             
             .final-text {
@@ -1544,8 +1547,30 @@
             // Premium frame styles
             const frameStyles = ['frame-polaroid', 'frame-pink-glow', 'frame-gold-luxury', 'frame-purple-dream', 'frame-green-nature'];
             
-            // Enhanced positions with varying heights
-            const leftPositions = [
+            // Check screen size for mobile
+            const isMobile = window.innerWidth <= 480;
+            const isTablet = window.innerWidth <= 768;
+            
+            // Enhanced positions with varying heights - adjusted for mobile
+            const leftPositions = isMobile ? [
+                { left: '5%', threadHeight: 50, frameSize: 110, zIndex: 30 },
+                { left: '25%', threadHeight: 80, frameSize: 115, zIndex: 25 },
+                { left: '10%', threadHeight: 120, frameSize: 105, zIndex: 35 },
+                { left: '28%', threadHeight: 160, frameSize: 110, zIndex: 20 },
+                { left: '7%', threadHeight: 210, frameSize: 100, zIndex: 40 },
+                { left: '22%', threadHeight: 260, frameSize: 105, zIndex: 28 },
+                { left: '15%', threadHeight: 310, frameSize: 100, zIndex: 32 },
+                { left: '20%', threadHeight: 360, frameSize: 95, zIndex: 38 }
+            ] : isTablet ? [
+                { left: '6%', threadHeight: 60, frameSize: 125, zIndex: 30 },
+                { left: '26%', threadHeight: 95, frameSize: 135, zIndex: 25 },
+                { left: '12%', threadHeight: 140, frameSize: 120, zIndex: 35 },
+                { left: '30%', threadHeight: 195, frameSize: 130, zIndex: 20 },
+                { left: '8%', threadHeight: 250, frameSize: 115, zIndex: 40 },
+                { left: '24%', threadHeight: 305, frameSize: 125, zIndex: 28 },
+                { left: '16%', threadHeight: 360, frameSize: 120, zIndex: 32 },
+                { left: '21%', threadHeight: 415, frameSize: 115, zIndex: 38 }
+            ] : [
                 { left: '8%', threadHeight: 70, frameSize: 145, zIndex: 30 },
                 { left: '28%', threadHeight: 110, frameSize: 155, zIndex: 25 },
                 { left: '15%', threadHeight: 170, frameSize: 140, zIndex: 35 },
@@ -1556,7 +1581,25 @@
                 { left: '22%', threadHeight: 510, frameSize: 135, zIndex: 38 }
             ];
             
-            const rightPositions = [
+            const rightPositions = isMobile ? [
+                { left: '65%', threadHeight: 55, frameSize: 115, zIndex: 27 },
+                { left: '80%', threadHeight: 90, frameSize: 110, zIndex: 33 },
+                { left: '63%', threadHeight: 135, frameSize: 120, zIndex: 22 },
+                { left: '83%', threadHeight: 180, frameSize: 105, zIndex: 36 },
+                { left: '68%', threadHeight: 230, frameSize: 115, zIndex: 24 },
+                { left: '78%', threadHeight: 280, frameSize: 100, zIndex: 34 },
+                { left: '61%', threadHeight: 330, frameSize: 110, zIndex: 29 },
+                { left: '76%', threadHeight: 380, frameSize: 105, zIndex: 31 }
+            ] : isTablet ? [
+                { left: '68%', threadHeight: 70, frameSize: 130, zIndex: 27 },
+                { left: '83%', threadHeight: 110, frameSize: 125, zIndex: 33 },
+                { left: '66%', threadHeight: 160, frameSize: 140, zIndex: 22 },
+                { left: '86%', threadHeight: 215, frameSize: 120, zIndex: 36 },
+                { left: '70%', threadHeight: 270, frameSize: 130, zIndex: 24 },
+                { left: '80%', threadHeight: 325, frameSize: 115, zIndex: 34 },
+                { left: '64%', threadHeight: 380, frameSize: 125, zIndex: 29 },
+                { left: '78%', threadHeight: 435, frameSize: 120, zIndex: 31 }
+            ] : [
                 { left: '70%', threadHeight: 85, frameSize: 150, zIndex: 27 },
                 { left: '85%', threadHeight: 130, frameSize: 145, zIndex: 33 },
                 { left: '68%', threadHeight: 190, frameSize: 155, zIndex: 22 },
