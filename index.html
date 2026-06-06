@@ -1003,6 +1003,64 @@
                 opacity: 0;
             }
         }
+
+        /* Corner flower & heart decorations - Premium Framing */
+        .corner-decoration {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            opacity: 0.85;
+            pointer-events: none;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .corner-decoration svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .corner-top-left {
+            top: 20px;
+            left: 20px;
+        }
+
+        .corner-top-right {
+            top: 20px;
+            right: 20px;
+            transform: scaleX(-1);
+        }
+
+        .corner-bottom-left {
+            bottom: 20px;
+            left: 20px;
+            transform: scaleY(-1);
+        }
+
+        .corner-bottom-right {
+            bottom: 20px;
+            right: 20px;
+            transform: scale(-1);
+        }
+
+        @media (max-width: 768px) {
+            .corner-decoration {
+                width: 50px;
+                height: 50px;
+                opacity: 0.65;
+                top: 10px;
+                bottom: 10px;
+            }
+            .corner-top-left { left: 10px; }
+            .corner-top-right { right: 10px; }
+            .corner-bottom-left { left: 10px; }
+            .corner-bottom-right { right: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -1144,6 +1202,20 @@
 
     <!-- Section 1: Intro -->
     <div class="section active" id="intro">
+        <!-- Corner Decorations -->
+        <div class="corner-decoration corner-top-left">
+            <svg><use href="#symbol-rose" x="0" y="0" width="45" height="45"/><use href="#symbol-pink-daisy" x="25" y="10" width="30" height="30"/><use href="#symbol-3d-heart" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+        <div class="corner-decoration corner-top-right">
+            <svg><use href="#symbol-rose" x="0" y="0" width="45" height="45"/><use href="#symbol-pink-daisy" x="25" y="10" width="30" height="30"/><use href="#symbol-3d-heart" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+        <div class="corner-decoration corner-bottom-left">
+            <svg><use href="#symbol-rose" x="0" y="0" width="45" height="45"/><use href="#symbol-pink-daisy" x="25" y="10" width="30" height="30"/><use href="#symbol-3d-heart" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+        <div class="corner-decoration corner-bottom-right">
+            <svg><use href="#symbol-rose" x="0" y="0" width="45" height="45"/><use href="#symbol-pink-daisy" x="25" y="10" width="30" height="30"/><use href="#symbol-3d-heart" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+
         <!-- Floating flowers -->
         <div class="floating-flower" style="top: 10%; left: 5%; animation-delay: 0s;"><svg><use href="#symbol-rose"/></svg></div>
         <div class="floating-flower" style="top: 15%; right: 8%; animation-delay: 1s;"><svg><use href="#symbol-pink-daisy"/></svg></div>
@@ -1178,6 +1250,20 @@
 
     <!-- Section 2: Envelope -->
     <div class="section" id="envelope-section">
+        <!-- Corner Decorations -->
+        <div class="corner-decoration corner-top-left">
+            <svg><use href="#symbol-rose" x="0" y="0" width="45" height="45"/><use href="#symbol-yellow-daisy" x="25" y="10" width="30" height="30"/><use href="#symbol-gold-star" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+        <div class="corner-decoration corner-top-right">
+            <svg><use href="#symbol-rose" x="0" y="0" width="45" height="45"/><use href="#symbol-yellow-daisy" x="25" y="10" width="30" height="30"/><use href="#symbol-gold-star" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+        <div class="corner-decoration corner-bottom-left">
+            <svg><use href="#symbol-rose" x="0" y="0" width="45" height="45"/><use href="#symbol-yellow-daisy" x="25" y="10" width="30" height="30"/><use href="#symbol-gold-star" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+        <div class="corner-decoration corner-bottom-right">
+            <svg><use href="#symbol-rose" x="0" y="0" width="45" height="45"/><use href="#symbol-yellow-daisy" x="25" y="10" width="30" height="30"/><use href="#symbol-gold-star" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+
         <!-- Floating flowers -->
         <div class="floating-flower" style="top: 12%; left: 8%; animation-delay: 0.2s;"><svg><use href="#symbol-pink-daisy"/></svg></div>
         <div class="floating-flower" style="top: 18%; right: 10%; animation-delay: 1.2s;"><svg><use href="#symbol-rose"/></svg></div>
@@ -1198,8 +1284,9 @@
         
         <div class="envelope-container">
             <div class="envelope" id="envelope">
-                <div class="letter" id="letter">
-                    <p>Open me!</p>
+                <div class="letter" id="letter" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 20px 10px;">
+                    <div style="width: 44px; height: 44px; animation: pulse-btn 2s infinite;"><svg><use href="#symbol-3d-heart"/></svg></div>
+                    <p style="font-family: 'Georgia', serif; font-size: 1.25rem; font-weight: bold; color: #ff3b6f; text-shadow: 0 1px 2px rgba(0,0,0,0.05); margin: 0;">Open me! 💌</p>
                 </div>
                 <div class="envelope-flap" id="flap"></div>
                 <div class="envelope-seal" id="seal"><svg style="width: 32px; height: 32px; display: block;"><use href="#symbol-3d-heart"/></svg></div>
@@ -1209,6 +1296,20 @@
 
     <!-- Section 3: Message -->
     <div class="section" id="message-section">
+        <!-- Corner Decorations -->
+        <div class="corner-decoration corner-top-left">
+            <svg><use href="#symbol-tulip" x="0" y="0" width="45" height="45"/><use href="#symbol-pink-daisy" x="25" y="10" width="30" height="30"/><use href="#symbol-3d-heart" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+        <div class="corner-decoration corner-top-right">
+            <svg><use href="#symbol-tulip" x="0" y="0" width="45" height="45"/><use href="#symbol-pink-daisy" x="25" y="10" width="30" height="30"/><use href="#symbol-3d-heart" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+        <div class="corner-decoration corner-bottom-left">
+            <svg><use href="#symbol-tulip" x="0" y="0" width="45" height="45"/><use href="#symbol-pink-daisy" x="25" y="10" width="30" height="30"/><use href="#symbol-3d-heart" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+        <div class="corner-decoration corner-bottom-right">
+            <svg><use href="#symbol-tulip" x="0" y="0" width="45" height="45"/><use href="#symbol-pink-daisy" x="25" y="10" width="30" height="30"/><use href="#symbol-3d-heart" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+
         <!-- Floating flowers -->
         <div class="floating-flower" style="top: 8%; left: 6%; animation-delay: 0.1s;"><svg><use href="#symbol-yellow-daisy"/></svg></div>
         <div class="floating-flower" style="top: 16%; right: 12%; animation-delay: 1.1s;"><svg><use href="#symbol-rose"/></svg></div>
@@ -1287,6 +1388,20 @@
 
     <!-- Section 5: Final Letter -->
     <div class="section" id="final-section">
+        <!-- Corner Decorations -->
+        <div class="corner-decoration corner-top-left">
+            <svg><use href="#symbol-rose" x="0" y="0" width="45" height="45"/><use href="#symbol-tulip" x="25" y="10" width="30" height="30"/><use href="#symbol-3d-heart" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+        <div class="corner-decoration corner-top-right">
+            <svg><use href="#symbol-rose" x="0" y="0" width="45" height="45"/><use href="#symbol-tulip" x="25" y="10" width="30" height="30"/><use href="#symbol-3d-heart" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+        <div class="corner-decoration corner-bottom-left">
+            <svg><use href="#symbol-rose" x="0" y="0" width="45" height="45"/><use href="#symbol-tulip" x="25" y="10" width="30" height="30"/><use href="#symbol-3d-heart" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+        <div class="corner-decoration corner-bottom-right">
+            <svg><use href="#symbol-rose" x="0" y="0" width="45" height="45"/><use href="#symbol-tulip" x="25" y="10" width="30" height="30"/><use href="#symbol-3d-heart" x="15" y="30" width="20" height="20"/></svg>
+        </div>
+
         <!-- Floating flowers -->
         <div class="floating-flower" style="top: 10%; left: 7%; animation-delay: 0s;"><svg><use href="#symbol-rose"/></svg></div>
         <div class="floating-flower" style="top: 16%; right: 9%; animation-delay: 1s;"><svg><use href="#symbol-pink-daisy"/></svg></div>
@@ -1331,7 +1446,7 @@
                 heart.style.height = size + 'px';
                 heartsContainer.appendChild(heart);
                 setTimeout(() => heart.remove(), 7000);
-            }, 800);
+            }, 500);
         }
 
         function createFlowersAndConfetti() {
@@ -1429,7 +1544,7 @@
                 flower.style.animationName = Math.random() > 0.5 ? 'flowerFall' : 'floatUp';
                 document.body.appendChild(flower);
                 setTimeout(() => flower.remove(), 20000);
-            }, 600);
+            }, 400);
             
             // Create confetti periodically
             setInterval(() => {
@@ -1447,10 +1562,10 @@
                     document.body.appendChild(confetti);
                     setTimeout(() => confetti.remove(), 16000);
                 }
-            }, 400);
+            }, 250);
             
             // Create balloons
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 12; i++) {
                 const balloon = document.createElement('div');
                 balloon.className = 'floating-balloon';
                 balloon.innerHTML = balloonSVGs[Math.floor(Math.random() * balloonSVGs.length)];
@@ -1462,7 +1577,7 @@
             }
             
             // Create star sparkles
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 30; i++) {
                 const star = document.createElement('div');
                 star.className = 'star-sparkle';
                 star.innerHTML = starSVGs[Math.floor(Math.random() * starSVGs.length)];
@@ -1475,7 +1590,7 @@
             
             // Create gradient blobs
             const blobColors = ['rgba(255, 105, 180, 0.5)', 'rgba(255, 215, 0, 0.4)', 'rgba(147, 112, 219, 0.4)'];
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 8; i++) {
                 const blob = document.createElement('div');
                 blob.className = 'gradient-blob';
                 blob.style.backgroundColor = blobColors[Math.floor(Math.random() * blobColors.length)];
@@ -1488,7 +1603,7 @@
             }
             
             // Create decorative hearts
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < 18; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'decor-heart';
                 heart.innerHTML = '<svg><use href="#symbol-3d-heart"/></svg>';
@@ -1503,7 +1618,7 @@
             
             // Create glowing circles
             const circleColors = ['#ff69b4', '#ffd700', '#9370db'];
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i < 9; i++) {
                 const circle = document.createElement('div');
                 circle.className = 'glow-circle';
                 circle.style.borderColor = circleColors[Math.floor(Math.random() * circleColors.length)];
@@ -1517,7 +1632,7 @@
             
             // Create ribbons
             const ribbonColors = ['#ff69b4', '#ffd700', '#9370db'];
-            for (let i = 0; i < 4; i++) {
+            for (let i = 0; i < 6; i++) {
                 const ribbon = document.createElement('div');
                 ribbon.className = 'decor-ribbon';
                 ribbon.style.backgroundColor = ribbonColors[Math.floor(Math.random() * ribbonColors.length)];
@@ -1550,7 +1665,7 @@
                 </svg>`
             ];
             
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i < 9; i++) {
                 const butterfly = document.createElement('div');
                 butterfly.className = 'decor-butterfly';
                 butterfly.innerHTML = butterflySVGs[Math.floor(Math.random() * butterflySVGs.length)];
@@ -1577,7 +1692,7 @@
                 </svg>`
             ];
             
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 15; i++) {
                 const diamond = document.createElement('div');
                 diamond.className = 'floating-diamond';
                 diamond.innerHTML = diamondSVGs[Math.floor(Math.random() * diamondSVGs.length)];
@@ -1589,7 +1704,7 @@
             
             // Create glowing particles
             const particleColors = ['#ff69b4', '#ffd700', '#9370db', '#32cd32'];
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 45; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'glow-particle';
                 const color = particleColors[Math.floor(Math.random() * particleColors.length)];
@@ -1604,7 +1719,7 @@
             
             // Create musical notes
             const notes = ['🎵', '🎶', '🎼', '🎹', '🎤'];
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 12; i++) {
                 const note = document.createElement('div');
                 note.className = 'musical-note';
                 note.textContent = notes[Math.floor(Math.random() * notes.length)];
@@ -1630,7 +1745,7 @@
                 </svg>`
             ];
             
-            for (let i = 0; i < 4; i++) {
+            for (let i = 0; i < 6; i++) {
                 const bow = document.createElement('div');
                 bow.className = 'decor-bow';
                 bow.innerHTML = bowSVGs[Math.floor(Math.random() * bowSVGs.length)];
