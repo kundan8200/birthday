@@ -1583,39 +1583,13 @@
                 photoFrame.style.transform = `rotate(${initialRotation}deg)`;
                 photoFrame.style.zIndex = pos.zIndex;
                 
-                // Add clothespin to polaroid frames
-                if (frameStyle === 'frame-polaroid') {
-                    const clothespin = document.createElement('div');
-                    clothespin.className = 'clothespin';
-                    photoFrame.appendChild(clothespin);
-                }
-                
-                // Add sparkles (more than before!)
-                for (let s = 0; s < 3; s++) {
-                    const sparkle = document.createElement('div');
-                    sparkle.className = 'sparkle';
-                    sparkle.style.top = (Math.random() * 60 - 10) + 'px';
-                    sparkle.style.left = (Math.random() * 110 - 5) + 'px';
-                    sparkle.style.animationDelay = (Math.random() * 2.5) + 's';
-                    photoFrame.appendChild(sparkle);
-                }
-                
-                // Add heart decorations
-                const heartEmojis = ['❤️', '💖', '💕', '💗', '💓'];
-                for (let h = 0; h < 2; h++) {
-                    const heart = document.createElement('span');
-                    heart.className = 'frame-heart';
-                    heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
-                    heart.style.top = (Math.random() * 40 - 15) + 'px';
-                    heart.style.left = (Math.random() * 70 - 15) + 'px';
-                    heart.style.animationDelay = (Math.random() * 3) + 's';
-                    photoFrame.appendChild(heart);
-                }
-                
+                // 1. ADD IMAGE FIRST!
                 const img = document.createElement('img');
                 img.src = file;
                 img.alt = `Birthday photo ${i + 1}`;
                 img.loading = 'lazy';
+                img.style.position = 'relative'; // Ensure image is positioned
+                img.style.zIndex = '1'; // Below decorations
                 
                 // Add error handling and fallback
                 img.onerror = function() {
@@ -1642,6 +1616,38 @@
                 };
                 
                 photoFrame.appendChild(img);
+                
+                // 2. Add clothespin to polaroid frames
+                if (frameStyle === 'frame-polaroid') {
+                    const clothespin = document.createElement('div');
+                    clothespin.className = 'clothespin';
+                    clothespin.style.zIndex = '10';
+                    photoFrame.appendChild(clothespin);
+                }
+                
+                // 3. Add sparkles
+                for (let s = 0; s < 3; s++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.top = (Math.random() * 60 - 10) + 'px';
+                    sparkle.style.left = (Math.random() * 110 - 5) + 'px';
+                    sparkle.style.animationDelay = (Math.random() * 2.5) + 's';
+                    sparkle.style.zIndex = '15';
+                    photoFrame.appendChild(sparkle);
+                }
+                
+                // 4. Add heart decorations
+                const heartEmojis = ['❤️', '💖', '💕', '💗', '💓'];
+                for (let h = 0; h < 2; h++) {
+                    const heart = document.createElement('span');
+                    heart.className = 'frame-heart';
+                    heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                    heart.style.top = (Math.random() * 40 - 15) + 'px';
+                    heart.style.left = (Math.random() * 70 - 15) + 'px';
+                    heart.style.animationDelay = (Math.random() * 3) + 's';
+                    heart.style.zIndex = '20';
+                    photoFrame.appendChild(heart);
+                }
                 photoThread.appendChild(photoFrame);
                 
                 container.appendChild(photoThread);
