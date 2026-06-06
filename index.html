@@ -859,13 +859,76 @@
         /* Mobile Optimizations */
         @media (max-width: 768px) {
             .hanging-gallery-container {
-                padding: 5px 2px;
+                padding: 10px 0;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none; /* Hide scrollbar for clean look */
             }
             
+            .hanging-gallery-container::-webkit-scrollbar {
+                display: none; /* Hide scrollbar for Chrome/Safari */
+            }
+            
+            .photo-threads-container {
+                height: 100%;
+                position: relative;
+            }
+            
+            /* Convert main thread to a horizontal clothesline */
+            .main-thread {
+                top: 90px !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 6px !important;
+                transform: none !important;
+                background: linear-gradient(90deg, #5d3a1a 0%, #8B4513 30%, #A0522D 50%, #8B4513 70%, #5d3a1a 100%) !important;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), 0 -2px 8px rgba(255, 255, 255, 0.3) !important;
+            }
+            
+            .mobile-scroll-hint {
+                display: flex !important;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                top: 25px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(5px);
+                padding: 8px 18px;
+                border-radius: 30px;
+                color: #8b4513;
+                font-family: 'Georgia', serif;
+                font-size: 0.85rem;
+                font-weight: bold;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+                z-index: 50;
+                pointer-events: none;
+                animation: pulse-hint 2s ease-in-out infinite;
+                gap: 8px;
+            }
+            
+            @keyframes pulse-hint {
+                0%, 100% { opacity: 0.7; transform: translate(-50%, 0) scale(1); }
+                50% { opacity: 1; transform: translate(-50%, 0) scale(1.05); }
+            }
+            
+            .hint-arrow {
+                display: inline-block;
+                animation: bounce-arrow 1s infinite alternate;
+            }
+            
+            @keyframes bounce-arrow {
+                0% { transform: translateX(-3px); }
+                100% { transform: translateX(3px); }
+            }
+
             .intro-text,
             .typewriter-text,
             .final-text {
-                font-size: 0.8em !important;
+                font-size: 0.85em !important;
                 padding: 0 15px;
             }
             
@@ -880,19 +943,11 @@
                 margin: 0 10px;
                 max-width: 95% !important;
             }
-            
-            .photo-frame {
-                transform: scale(0.8);
-            }
         }
         
         @media (max-width: 480px) {
             .intro-text {
                 font-size: 0.75em !important;
-            }
-            
-            .photo-frame {
-                transform: scale(0.65);
             }
             
             .final-text {
@@ -1017,6 +1072,11 @@
     <!-- Section 4: Hanging Photo Gallery -->
     <div class="section" id="gallery-section">
         <div class="hanging-gallery-container">
+            <!-- Mobile Scroll Hint -->
+            <div class="mobile-scroll-hint" style="display: none;">
+                <span class="hint-arrow">←</span> Swipe to view photos <span class="hint-arrow">→</span>
+            </div>
+
             <!-- Background glows -->
             <div class="bg-glow bg-glow-1"></div>
             <div class="bg-glow bg-glow-2"></div>
@@ -1034,7 +1094,7 @@
             <div class="floating-flower" style="bottom: 42%; right: 9%; animation-delay: 4.5s;">🌺</div>
             
             <!-- Floating crackers -->
-            <div class="floating-cracker" style="top: 6%; left: 28%; animation-delay: 0.3s;">�</div>
+            <div class="floating-cracker" style="top: 6%; left: 28%; animation-delay: 0.3s;">🎉</div>
             <div class="floating-cracker" style="top: 10%; right: 25%; animation-delay: 1.3s;">🎉</div>
             <div class="floating-cracker" style="top: 24%; left: 82%; animation-delay: 2.3s;">🎊</div>
             <div class="floating-cracker" style="top: 36%; right: 32%; animation-delay: 3.3s;">🎉</div>
@@ -1045,7 +1105,7 @@
             <div class="floating-decoration" style="top: 10%; left: 18%; animation-delay: 0s;">❤️</div>
             <div class="floating-decoration" style="top: 15%; right: 18%; animation-delay: 1.5s;">✨</div>
             <div class="floating-decoration" style="bottom: 30%; left: 20%; animation-delay: 2s;">⭐</div>
-            <div class="floating-decoration" style="bottom: 35%; right: 16%; animation-delay: 3.5s;">�</div>
+            <div class="floating-decoration" style="bottom: 35%; right: 16%; animation-delay: 3.5s;">💖</div>
             
             <!-- Main thread (dori) -->
             <div class="main-thread"></div>
@@ -1053,7 +1113,7 @@
             <!-- Photo frames container -->
             <div class="photo-threads-container" id="photoThreadsContainer"></div>
         </div>
-        <button class="next-btn" id="galleryNextBtn" style="position: absolute; bottom: 40px; z-index: 20;">Next</button>
+        <button class="next-btn" id="galleryNextBtn" style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 20;">Next</button>
     </div>
     
     <!-- Full-screen photo popup -->
@@ -1547,73 +1607,71 @@
             // Premium frame styles
             const frameStyles = ['frame-polaroid', 'frame-pink-glow', 'frame-gold-luxury', 'frame-purple-dream', 'frame-green-nature'];
             
-            // Check screen size for mobile
-            const isMobile = window.innerWidth <= 480;
-            const isTablet = window.innerWidth <= 768;
+            // Check screen size for mobile/tablet
+            const isMobile = window.innerWidth <= 768;
             
-            // Enhanced positions with varying heights - adjusted for mobile
-            const leftPositions = isMobile ? [
-                { left: '5%', threadHeight: 50, frameSize: 110, zIndex: 30 },
-                { left: '25%', threadHeight: 80, frameSize: 115, zIndex: 25 },
-                { left: '10%', threadHeight: 120, frameSize: 105, zIndex: 35 },
-                { left: '28%', threadHeight: 160, frameSize: 110, zIndex: 20 },
-                { left: '7%', threadHeight: 210, frameSize: 100, zIndex: 40 },
-                { left: '22%', threadHeight: 260, frameSize: 105, zIndex: 28 },
-                { left: '15%', threadHeight: 310, frameSize: 100, zIndex: 32 },
-                { left: '20%', threadHeight: 360, frameSize: 95, zIndex: 38 }
-            ] : isTablet ? [
-                { left: '6%', threadHeight: 60, frameSize: 125, zIndex: 30 },
-                { left: '26%', threadHeight: 95, frameSize: 135, zIndex: 25 },
-                { left: '12%', threadHeight: 140, frameSize: 120, zIndex: 35 },
-                { left: '30%', threadHeight: 195, frameSize: 130, zIndex: 20 },
-                { left: '8%', threadHeight: 250, frameSize: 115, zIndex: 40 },
-                { left: '24%', threadHeight: 305, frameSize: 125, zIndex: 28 },
-                { left: '16%', threadHeight: 360, frameSize: 120, zIndex: 32 },
-                { left: '21%', threadHeight: 415, frameSize: 115, zIndex: 38 }
-            ] : [
-                { left: '8%', threadHeight: 70, frameSize: 145, zIndex: 30 },
-                { left: '28%', threadHeight: 110, frameSize: 155, zIndex: 25 },
-                { left: '15%', threadHeight: 170, frameSize: 140, zIndex: 35 },
-                { left: '32%', threadHeight: 230, frameSize: 150, zIndex: 20 },
-                { left: '10%', threadHeight: 300, frameSize: 135, zIndex: 40 },
-                { left: '25%', threadHeight: 370, frameSize: 145, zIndex: 28 },
-                { left: '18%', threadHeight: 440, frameSize: 140, zIndex: 32 },
-                { left: '22%', threadHeight: 510, frameSize: 135, zIndex: 38 }
-            ];
+            // Generate layout configurations based on device screen
+            const positions = [];
+            let totalWidth = window.innerWidth;
             
-            const rightPositions = isMobile ? [
-                { left: '65%', threadHeight: 55, frameSize: 115, zIndex: 27 },
-                { left: '80%', threadHeight: 90, frameSize: 110, zIndex: 33 },
-                { left: '63%', threadHeight: 135, frameSize: 120, zIndex: 22 },
-                { left: '83%', threadHeight: 180, frameSize: 105, zIndex: 36 },
-                { left: '68%', threadHeight: 230, frameSize: 115, zIndex: 24 },
-                { left: '78%', threadHeight: 280, frameSize: 100, zIndex: 34 },
-                { left: '61%', threadHeight: 330, frameSize: 110, zIndex: 29 },
-                { left: '76%', threadHeight: 380, frameSize: 105, zIndex: 31 }
-            ] : isTablet ? [
-                { left: '68%', threadHeight: 70, frameSize: 130, zIndex: 27 },
-                { left: '83%', threadHeight: 110, frameSize: 125, zIndex: 33 },
-                { left: '66%', threadHeight: 160, frameSize: 140, zIndex: 22 },
-                { left: '86%', threadHeight: 215, frameSize: 120, zIndex: 36 },
-                { left: '70%', threadHeight: 270, frameSize: 130, zIndex: 24 },
-                { left: '80%', threadHeight: 325, frameSize: 115, zIndex: 34 },
-                { left: '64%', threadHeight: 380, frameSize: 125, zIndex: 29 },
-                { left: '78%', threadHeight: 435, frameSize: 120, zIndex: 31 }
-            ] : [
-                { left: '70%', threadHeight: 85, frameSize: 150, zIndex: 27 },
-                { left: '85%', threadHeight: 130, frameSize: 145, zIndex: 33 },
-                { left: '68%', threadHeight: 190, frameSize: 155, zIndex: 22 },
-                { left: '88%', threadHeight: 260, frameSize: 140, zIndex: 36 },
-                { left: '72%', threadHeight: 330, frameSize: 150, zIndex: 24 },
-                { left: '82%', threadHeight: 400, frameSize: 135, zIndex: 34 },
-                { left: '66%', threadHeight: 470, frameSize: 145, zIndex: 29 },
-                { left: '80%', threadHeight: 540, frameSize: 140, zIndex: 31 }
-            ];
-            
-            const allPositions = [...leftPositions, ...rightPositions];
+            if (isMobile) {
+                const spacing = 210; // Space between photo threads (in pixels)
+                const startPadding = 30; // Left padding at the beginning of the line
+                
+                imageFiles.forEach((file, i) => {
+                    // Alternating thread heights for natural look (e.g. 50px to 110px)
+                    const threadHeight = 65 + (i % 3) * 20 + (i % 2) * 10;
+                    // Alternating frame sizes (e.g. 120px to 140px)
+                    const frameSize = 120 + (i % 3) * 10;
+                    
+                    positions.push({
+                        left: `${startPadding + i * spacing}px`,
+                        threadHeight: threadHeight,
+                        frameSize: frameSize,
+                        zIndex: 20 + i
+                    });
+                });
+                
+                totalWidth = startPadding + imageFiles.length * spacing + 120;
+                container.style.width = totalWidth + 'px';
+                
+                // Stretch the horizontal string (dori) across the whole width
+                const mainThread = document.querySelector('.main-thread');
+                if (mainThread) {
+                    mainThread.style.width = totalWidth + 'px';
+                }
+            } else {
+                // Desktop positions
+                const leftPositions = [
+                    { left: '8%', threadHeight: 70, frameSize: 145, zIndex: 30 },
+                    { left: '28%', threadHeight: 110, frameSize: 155, zIndex: 25 },
+                    { left: '15%', threadHeight: 170, frameSize: 140, zIndex: 35 },
+                    { left: '32%', threadHeight: 230, frameSize: 150, zIndex: 20 },
+                    { left: '10%', threadHeight: 300, frameSize: 135, zIndex: 40 },
+                    { left: '25%', threadHeight: 370, frameSize: 145, zIndex: 28 },
+                    { left: '18%', threadHeight: 440, frameSize: 140, zIndex: 32 },
+                    { left: '22%', threadHeight: 510, frameSize: 135, zIndex: 38 }
+                ];
+                
+                const rightPositions = [
+                    { left: '70%', threadHeight: 85, frameSize: 150, zIndex: 27 },
+                    { left: '85%', threadHeight: 130, frameSize: 145, zIndex: 33 },
+                    { left: '68%', threadHeight: 190, frameSize: 155, zIndex: 22 },
+                    { left: '88%', threadHeight: 260, frameSize: 140, zIndex: 36 },
+                    { left: '72%', threadHeight: 330, frameSize: 150, zIndex: 24 },
+                    { left: '82%', threadHeight: 400, frameSize: 135, zIndex: 34 },
+                    { left: '66%', threadHeight: 470, frameSize: 145, zIndex: 29 },
+                    { left: '80%', threadHeight: 540, frameSize: 140, zIndex: 31 }
+                ];
+                
+                const allPositions = [...leftPositions, ...rightPositions];
+                imageFiles.forEach((file, i) => {
+                    positions.push(allPositions[i % allPositions.length]);
+                });
+            }
             
             imageFiles.forEach((file, i) => {
-                const pos = allPositions[i % allPositions.length];
+                const pos = positions[i];
                 const frameStyle = frameStyles[i % frameStyles.length];
                 const initialRotation = (Math.random() - 0.5) * 10;
                 
@@ -1636,14 +1694,7 @@
                 photoFrame.style.height = pos.frameSize + 'px';
                 photoFrame.style.transform = `rotate(${initialRotation}deg)`;
                 photoFrame.style.zIndex = pos.zIndex;
-                photoFrame.style.cursor = 'pointer'; // Make click obvious
-                
-                // Add click event to open popup
-                photoFrame.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    document.getElementById('popupImg').src = file;
-                    document.getElementById('popup').style.display = 'flex';
-                });
+                photoFrame.style.cursor = 'pointer';
                 
                 // 1. ADD IMAGE FIRST!
                 const img = document.createElement('img');
@@ -1714,6 +1765,9 @@
                 
                 container.appendChild(photoThread);
                 
+                // Entry animation speed depends on device (faster on mobile for better experience)
+                const staggerDelay = isMobile ? (i * 0.15 + 0.2) : (i * 0.5 + 0.4);
+                
                 // Amazing entrance animation!
                 gsap.fromTo(photoFrame, {
                     scale: 0,
@@ -1729,7 +1783,7 @@
                     rotate: initialRotation,
                     duration: 1.4,
                     ease: 'back.out(1.8)',
-                    delay: i * 1.5 + 0.4
+                    delay: staggerDelay
                 });
                 
                 // Physics-based swinging animation!
@@ -1752,13 +1806,14 @@
                     delay: swingDuration / 2
                 });
                 
-                // Click handler with premium animation
-                photoFrame.addEventListener('click', () => {
+                // Click handler with premium animation and popup open
+                photoFrame.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     const popup = document.getElementById('popup');
                     const popupImg = document.getElementById('popupImg');
                     
                     gsap.to(photoFrame, {
-                        scale: 1.25,
+                        scale: isMobile ? 1.1 : 1.25,
                         duration: 0.4,
                         ease: 'back.out(1.7)',
                         yoyo: true,
@@ -1822,6 +1877,25 @@
                 document.getElementById('popup').style.display = 'none';
             });
             
+            // Fade out scroll hint on scroll
+            const scrollContainer = document.querySelector('.hanging-gallery-container');
+            const scrollHint = document.querySelector('.mobile-scroll-hint');
+            if (scrollContainer && scrollHint) {
+                const handleScroll = () => {
+                    if (scrollContainer.scrollLeft > 10) {
+                        gsap.to(scrollHint, {
+                            opacity: 0,
+                            duration: 0.5,
+                            onComplete: () => {
+                                scrollHint.style.display = 'none';
+                            }
+                        });
+                        scrollContainer.removeEventListener('scroll', handleScroll);
+                    }
+                };
+                scrollContainer.addEventListener('scroll', handleScroll);
+            }
+
             // Next button
             document.getElementById('galleryNextBtn').addEventListener('click', (e) => {
                 createRipple(e, document.getElementById('galleryNextBtn'));
